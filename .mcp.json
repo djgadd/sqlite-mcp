@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "deskpro-sqlite-mcp": {
+      "command": "node",
+      "args": [
+        "/Users/dangadd/Projects/sqlite-mcp/dist/index.js"
+      ]
+    }
+  }
+}
