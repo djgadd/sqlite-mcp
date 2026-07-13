@@ -1,0 +1,16 @@
+name: "on: pull request"
+
+# Entrypoint: pull requests. Composes reusable workflows only.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/workflow-call.ci.yml
+
+  lint-pr:
+    uses: ./.github/workflows/workflow-call.lint-pr.yml

@@ -1,0 +1,23 @@
+name: "workflow-call: lint-pr"
+
+# Reusable: lint every commit message in the PR against Conventional Commits.
+# We lint the commits (not the PR title) because PRs are merged, not squashed,
+# so each commit lands on main verbatim and is what Release Please parses.
+# Config lives in .commitlintrc.json.
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history so the action can lint the PR's whole commit range.
+          fetch-depth: 0
+
+      - uses: wagoid/commitlint-github-action@v6

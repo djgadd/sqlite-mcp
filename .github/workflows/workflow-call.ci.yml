@@ -1,0 +1,30 @@
+name: "workflow-call: ci"
+
+# Reusable: build + run the full test suite. Called by event entrypoints.
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # Minimum supported major (22.x, >=22.16) and current (24.x).
+        node-version: [22.x, 24.x]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - run: npm ci
+
+      # `npm test` runs the build and the node:test suite.
+      - run: npm test

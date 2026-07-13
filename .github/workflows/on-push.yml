@@ -1,0 +1,14 @@
+name: "on: push"
+
+# Entrypoint: pushes to any branch except main (main has its own entrypoint).
+# Composes reusable workflows only.
+on:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/workflow-call.ci.yml

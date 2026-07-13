@@ -7,3 +7,6 @@ dist/
 *.db
 *.sqlite
 *.sqlite3
+
+# review-and-refine tracking artifact
+.review.json

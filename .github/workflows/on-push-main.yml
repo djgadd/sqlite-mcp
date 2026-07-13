@@ -1,0 +1,19 @@
+name: "on: push → main"
+
+# Entrypoint: pushes to main (i.e. merged PRs, including the release PR).
+# Composes reusable workflows only: run CI, then the release/publish flow.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/workflow-call.ci.yml
+
+  release:
+    uses: ./.github/workflows/workflow-call.release.yml
+    secrets: inherit
