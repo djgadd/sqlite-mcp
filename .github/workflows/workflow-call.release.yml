@@ -5,10 +5,11 @@ name: "workflow-call: release"
 #    when that PR is merged, creates the tag + GitHub Release.
 #  - publish runs only when a release was just created, and pushes to npm.
 on:
+  # NPM_TOKEN is intentionally NOT declared as a required workflow_call secret:
+  # requiring it would fail every push to main until the secret exists, even
+  # though release-please needs no token. It reaches the publish job via the
+  # caller's `secrets: inherit`, and is only consumed when a release is cut.
   workflow_call:
-    secrets:
-      NPM_TOKEN:
-        required: true
 
 permissions: {}
 
