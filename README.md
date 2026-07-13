@@ -1,4 +1,4 @@
-# deskpro-sqlite-mcp
+# node-sqlite-mcp
 
 An [MCP](https://modelcontextprotocol.io) server that lets an AI agent query
 **SQLite database files** on the local machine.
@@ -20,7 +20,7 @@ The server is published to npm and is installed into your agent with
 [`add-mcp`](https://github.com/neon-solutions/add-mcp):
 
 ```bash
-npx add-mcp deskpro-sqlite-mcp
+npx add-mcp node-sqlite-mcp
 ```
 
 `add-mcp` detects your installed agents (Claude Code, Claude Desktop, Cursor,
@@ -30,7 +30,7 @@ cloned or installed globally — the command is fetched and run on demand.
 You can also run it directly to sanity-check it:
 
 ```bash
-npx -y deskpro-sqlite-mcp
+npx -y node-sqlite-mcp
 ```
 
 It speaks MCP over stdio and waits for a client; there is nothing interactive to
@@ -85,13 +85,38 @@ npm run build    # compile TypeScript to dist/
 Source is TypeScript in `src/`; the published package ships compiled JavaScript
 in `dist/` (the `bin` entry point). Consumers never run a build step.
 
-### Publishing
+### Releases & publishing
 
-`prepublishOnly` compiles before publish, so:
+Releases are automated with [Release Please](https://github.com/googleapis/release-please),
+driven by [Conventional Commits](https://www.conventionalcommits.org/):
+
+- Every push to `main` opens or updates a standing **release PR** that bumps the
+  version in `package.json` / `package-lock.json` and updates `CHANGELOG.md`,
+  derived from the commits since the last release (`fix:` → patch, `feat:` →
+  minor, a `!` or `BREAKING CHANGE:` → major).
+- Merging that release PR tags the version, creates a GitHub Release, and
+  triggers `npm publish` (`on-push-main.yml` → `workflow-call.release.yml`).
+
+So the normal flow is: land Conventional-Commit PRs on `main`, then merge the
+release PR when you want to cut a version — no manual tag or `npm publish`.
+Publishing requires an `NPM_TOKEN` repository secret: an npm **automation** token
+with publish rights to the `node-sqlite-mcp` package.
+
+To publish by hand instead (unscoped packages publish publicly by default):
 
 ```bash
 npm publish
 ```
+
+### Commit messages
+
+This repo uses [Conventional Commits](https://www.conventionalcommits.org/).
+Because PRs are merged (not squashed), every commit lands on `main` verbatim and
+is what Release Please parses — so each commit in a PR is linted against the
+convention (`on-pr.yml` → `workflow-call.lint-pr.yml`, config in
+`.commitlintrc.json`). Common types: `feat:`, `fix:`, `docs:`, `chore:`,
+`refactor:`, `test:`, `ci:`. A `feat!:` prefix or a `BREAKING CHANGE:` footer
+marks a breaking change.
 
 ## License
 

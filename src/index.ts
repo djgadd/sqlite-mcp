@@ -80,7 +80,7 @@ function withDatabase(path: string, fn: (db: DatabaseSync) => ToolResult): ToolR
 }
 
 const server = new McpServer({
-  name: "deskpro-sqlite-mcp",
+  name: "node-sqlite-mcp",
   version,
 });
 
@@ -149,6 +149,6 @@ async function main(): Promise<void> {
 }
 
 main().catch((error) => {
-  console.error("Fatal error starting deskpro-sqlite-mcp:", error);
+  console.error("Fatal error starting node-sqlite-mcp:", error);
   process.exit(1);
 });

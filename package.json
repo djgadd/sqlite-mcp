@@ -1,10 +1,10 @@
 {
-  "name": "deskpro-sqlite-mcp",
+  "name": "node-sqlite-mcp",
   "version": "0.1.0",
   "description": "MCP server for querying SQLite database files. Uses Node's built-in node:sqlite, so it has no native/system dependencies.",
   "type": "module",
   "bin": {
-    "deskpro-sqlite-mcp": "dist/index.js"
+    "node-sqlite-mcp": "dist/index.js"
   },
   "main": "dist/index.js",
   "files": [
@@ -26,10 +26,17 @@
     "mcp",
     "model-context-protocol",
     "sqlite",
-    "database",
-    "deskpro"
+    "database"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djgadd/sqlite-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/djgadd/sqlite-mcp/issues"
+  },
+  "homepage": "https://github.com/djgadd/sqlite-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^3.25.76"
