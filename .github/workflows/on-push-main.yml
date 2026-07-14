@@ -6,14 +6,21 @@ on:
   push:
     branches: [main]
 
+# Baseline for called workflows; the release job widens its own grant below.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   ci:
     uses: ./.github/workflows/workflow-call.ci.yml
 
   release:
+    # release-please needs contents + PR write; the publish step authenticates
+    # to npm via OIDC trusted publishing, which needs id-token: write. With a
+    # reusable workflow, id-token must be granted on BOTH this caller job and
+    # the child publish job.
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     uses: ./.github/workflows/workflow-call.release.yml
-    secrets: inherit

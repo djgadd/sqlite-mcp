@@ -99,10 +99,15 @@ driven by [Conventional Commits](https://www.conventionalcommits.org/):
 
 So the normal flow is: land Conventional-Commit PRs on `main`, then merge the
 release PR when you want to cut a version — no manual tag or `npm publish`.
-Publishing requires an `NPM_TOKEN` repository secret: an npm **automation** token
-with publish rights to the `node-sqlite-mcp` package.
 
-To publish by hand instead (unscoped packages publish publicly by default):
+Publishing uses npm **trusted publishing** (OIDC) — no tokens. Configure the
+trusted publisher on npmjs.com against this repository, the entry workflow
+**`on-push-main.yml`**, and the **`production`** environment. The publish job
+runs with `id-token: write` on npm ≥ 11.5.1, and provenance is generated
+automatically.
+
+To publish by hand instead (e.g. the first release, to bootstrap the package
+before a trusted publisher can be configured), from a logged-in machine:
 
 ```bash
 npm publish
