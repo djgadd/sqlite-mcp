@@ -10,3 +10,6 @@ dist/
 
 # review-and-refine tracking artifact
 .review.json
+
+# local MCP server registration (machine-specific absolute path; not portable)
+.mcp.json
